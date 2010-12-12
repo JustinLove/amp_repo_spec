@@ -1,0 +1,3 @@
+module AmpRepoSpec
+  # Your code goes here...
+end
