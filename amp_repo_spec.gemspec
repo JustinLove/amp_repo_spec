@@ -6,10 +6,10 @@ Gem::Specification.new do |s|
   s.name        = "amp_repo_spec"
   s.version     = AmpRepoSpec::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
+  s.authors     = ["Justin Love"]
+  s.email       = ["git@JustinLove.name"]
+  s.homepage    = "http://wondible.com"
+  s.summary     = %q{Generic spec for Amp repos}
   s.description = %q{TODO: Write a gem description}
 
   s.rubyforge_project = "amp_repo_spec"
@@ -18,4 +18,6 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
+
+  s.add_dependency('rspec', '>= 2.0.0')
 end
