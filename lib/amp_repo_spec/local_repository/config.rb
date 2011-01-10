@@ -1,4 +1,4 @@
-shared_examples_for 'local repository config' do
+shared_examples_for 'LocalRepository#config' do
   it {should respond_to :config}
 
   describe 'without no config specified' do

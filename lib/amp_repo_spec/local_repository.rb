@@ -1,8 +1,15 @@
-require 'amp_repo_spec/local_repository/config'
-require 'amp_repo_spec/local_repository/staging_area'
+local_repository_methods = %w{
+  config
+  staging_area
+}
+
+local_repository_methods.each do |meth|
+  require 'amp_repo_spec/local_repository/' + meth
+end
 
 shared_examples_for 'local repository' do
   it {should be_kind_of(Enumerable)}
-  it_should_behave_like 'local repository config'
-  it_should_behave_like 'local repository staging area'
+  local_repository_methods.each do |meth|
+    it_should_behave_like 'LocalRepository#' + meth
+  end
 end
