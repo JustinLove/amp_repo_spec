@@ -1,12 +1,8 @@
-local_repository_methods = %w{
-  config
-  staging_area
-  init
-  working_join
-}
+local_repository_methods = []
 
-local_repository_methods.each do |meth|
-  require 'amp_repo_spec/local_repository/' + meth
+Dir.glob(File.join(File.dirname(__FILE__), 'local_repository/*.rb')).each do |file|
+  require file
+  local_repository_methods << File.basename(file, '.rb') 
 end
 
 require 'amp_repo_spec/amp_spec_helper'
