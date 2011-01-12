@@ -1,4 +1,4 @@
-shared_examples_for 'LocalRepository#working_join' do
+shared_examples_for 'local_repository#working_join' do
   it {should respond_to :working_join}
   subject {described_class.new('/path')}
 

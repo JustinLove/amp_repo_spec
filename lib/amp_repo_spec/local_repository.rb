@@ -9,6 +9,6 @@ shared_examples_for 'local repository' do
 
   Dir.glob(File.join(File.dirname(__FILE__), 'local_repository/*.rb')).each do |file|
     require file
-    it_should_behave_like 'LocalRepository#' + File.basename(file, '.rb')
+    it_should_behave_like 'local_repository#' + File.basename(file, '.rb')
   end
 end

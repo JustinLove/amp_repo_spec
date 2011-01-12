@@ -1,4 +1,4 @@
-shared_examples_for 'LocalRepository#init' do
+shared_examples_for 'local_repository#init' do
   it {should respond_to :init}
 
   RSpec::Matchers.define :be_a_directory do
