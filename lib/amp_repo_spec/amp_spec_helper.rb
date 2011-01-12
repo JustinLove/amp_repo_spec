@@ -4,7 +4,7 @@ module AmpRepoSpec::Helper
   def self.included(into)
     into.before(:all) do
       tmpdir = nil
-      Dir.chdir Dir.tmpdir do tmpdir = Dir.pwd end # HACK OSX /private/tmp
+      Dir.chdir tmpdir = Dir.tmpdir
       @tempdir = File.join tmpdir, "test_amp_#{$$}"
       @tempdir.untaint
     end
