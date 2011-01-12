@@ -19,7 +19,7 @@ shared_examples_for 'LocalRepository#init' do
   end
 
   describe "after init" do
-    subject {described_class.new(tempdir).tap {|s| s.init}}
+    before(:all) {subject.init}
     its(:root) {should be_a_directory}
     its(:root) {should contain_the_file('Ampfile')}
   end
