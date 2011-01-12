@@ -2,6 +2,7 @@ local_repository_methods = %w{
   config
   staging_area
   init
+  working_join
 }
 
 local_repository_methods.each do |meth|
