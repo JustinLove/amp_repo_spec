@@ -13,6 +13,8 @@ shared_examples_for 'local_repository#init' do
     end
   end
 
+  in_a_new_directory
+
   describe "before init" do
     its(:root) {should_not be_a_directory}
     its(:root) {should_not contain_the_file('Ampfile')}

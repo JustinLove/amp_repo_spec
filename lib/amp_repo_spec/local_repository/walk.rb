@@ -20,6 +20,9 @@ shared_examples_for 'local_repository#walk' do
     Amp::Match.stub('create').and_return(match_all)
   end
 
+  in_a_new_directory
+
+  before(:all) {subject.init}
   its(:walk) {should include('Ampfile')}
 
   it "should use a matcher" do
