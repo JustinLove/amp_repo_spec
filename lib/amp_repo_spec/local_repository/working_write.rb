@@ -5,7 +5,6 @@ shared_examples_for 'local_repository#working_write' do
 
   it "should write to a new file" do
     subject.working_write("new.file", "something")
-    p subject.root, Dir.getwd
     File.exist?("amp/new.file").should be_true
   end
 
