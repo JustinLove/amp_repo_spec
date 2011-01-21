@@ -25,15 +25,16 @@ module AmpRepoSpec::Helper
     include Construct::Helpers
     def in_a_new_directory
       oldpath = Dir.getwd
-      path = create_construct
+      newpath = create_construct
       before(:all) do
-        Dir.chdir path.to_s
+        Dir.chdir newpath.to_s
+        @path = newpath
       end
       after(:all) do
         Dir.chdir oldpath
-        path.destroy!
+        newpath.destroy!
       end
-      subject {described_class.new(path.to_s + '/amp')}
+      subject {described_class.new(newpath.to_s + '/amp')}
     end
   end
 end
