@@ -1,5 +1,4 @@
 shared_examples_for 'staging_area#quack' do |duck|
-  next unless duck
   [
     :tracking?,
     :examine_named_files,
@@ -23,6 +22,6 @@ shared_examples_for 'staging_area#quack' do |duck|
     :file_precise_status,
     :calculate_delta,
   ].each do |meth|
-    it {duck.should respond_to(meth)}
+    it {(duck || subject).should respond_to(meth)}
   end
 end

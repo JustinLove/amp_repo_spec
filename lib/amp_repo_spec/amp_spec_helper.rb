@@ -5,6 +5,7 @@ module AmpRepoSpec::Helper
   include Construct::Helpers
   def self.included(into)
     into.before(:all) do
+      @basedir = Dir.getwd
       @construct = create_construct
       Dir.chdir @construct.to_s
       @tempdir = File.join @construct.to_s, "test_amp_#{$$}"
@@ -13,6 +14,7 @@ module AmpRepoSpec::Helper
 
     into.after(:all) do
       @construct.destroy! if defined?(@construct) && @construct
+      Dir.chdir @basedir
     end
 
     into.extend ClassMethods
