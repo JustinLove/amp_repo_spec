@@ -34,7 +34,7 @@ module AmpRepoSpec::Helper
         Dir.chdir oldpath
         newpath.destroy!
       end
-      subject {described_class.new(newpath.to_s + '/amp')}
+      let(:repo) {ModuleUnderTest::LocalRepository.new(newpath.to_s + '/amp')}
     end
   end
 end

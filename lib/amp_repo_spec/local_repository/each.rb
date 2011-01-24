@@ -15,6 +15,7 @@ shared_examples_for 'local_repository#each' do
   end
 
   in_a_new_directory
+  subject {repo}
 
   describe 'in a repository with two revisions' do
     before(:all) do

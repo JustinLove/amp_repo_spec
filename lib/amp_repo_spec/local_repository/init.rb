@@ -14,6 +14,7 @@ shared_examples_for 'local_repository#init' do
   end
 
   in_a_new_directory
+  subject {repo}
 
   describe "before init" do
     its(:root) {should_not be_a_directory}

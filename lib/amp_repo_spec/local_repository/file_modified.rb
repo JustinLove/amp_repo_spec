@@ -3,6 +3,7 @@ shared_examples_for 'local_repository#file_modified' do
 
   describe "in a new repo" do
     in_a_new_directory
+    subject {repo}
 
     before(:all) do
       subject.init
@@ -18,6 +19,7 @@ shared_examples_for 'local_repository#file_modified' do
 
   describe "after committing" do
     in_a_new_directory
+    subject {repo}
 
     before(:all) do
       subject.init
@@ -34,6 +36,7 @@ shared_examples_for 'local_repository#file_modified' do
 
   describe "after changes" do
     in_a_new_directory
+    subject {repo}
 
     before(:all) do
       subject.init

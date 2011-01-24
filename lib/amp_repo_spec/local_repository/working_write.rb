@@ -2,6 +2,7 @@ shared_examples_for 'local_repository#working_write' do
   it {should respond_to :working_write}
 
   in_a_new_directory
+  subject {repo}
 
   it "should write to a new file" do
     subject.working_write("new.file", "something")
