@@ -1,4 +1,5 @@
-shared_examples_for 'a staging area duck' do |duck|
+shared_examples_for 'staging_area#quack' do |duck|
+  next unless duck
   [
     :tracking?,
     :examine_named_files,
