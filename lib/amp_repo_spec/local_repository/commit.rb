@@ -3,7 +3,7 @@ shared_examples_for 'local_repository#commit' do
 
   RSpec::Matchers.define :look_like_a_digest do
     match do |actual|
-      actual.match(/[0-9a-zA-Z]{20-40}/)
+      actual && actual.to_s.match(/[0-9a-zA-Z]{20,40}/)
     end
   end
 
@@ -26,7 +26,7 @@ shared_examples_for 'local_repository#commit' do
     end
   end
 
-  pending "should commmit in a repo with one file" do
+  it "should commmit in a repo with one file" do
     in_a_new_repo do |path|
       path.file('some.file')
       subject.add('some.file')
