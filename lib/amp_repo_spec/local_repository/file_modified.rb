@@ -8,11 +8,12 @@ shared_examples_for 'local_repository#file_modified' do
     before(:all) do
       subject.init
       @the_file = 'the.file'
-      @path.file(@the_file)
+      @path.file('amp/the.file')
       subject.add(@the_file)
+      subject.refresh!
     end
 
-    xit "is added, not modified" do
+    it "is added, not modified" do
       subject.file_modified?(@the_file).should be_false
     end
   end
@@ -24,12 +25,13 @@ shared_examples_for 'local_repository#file_modified' do
     before(:all) do
       subject.init
       @the_file = 'the.file'
-      @path.file(@the_file)
+      @path.file('amp/the.file')
       subject.add(@the_file)
-      #subject.commit
+      subject.commit(:message => 'stuff')
+      subject.refresh!
     end
 
-    xit "should not be modified" do
+    it "should not be modified" do
       subject.file_modified?(@the_file).should be_false
     end
   end
@@ -41,16 +43,17 @@ shared_examples_for 'local_repository#file_modified' do
     before(:all) do
       subject.init
       @the_file = 'the.file'
-      @path.file(@the_file)
+      @path.file('amp/the.file')
       subject.add(@the_file)
-      #subject.commit
+      subject.commit(:message => 'stuff')
 
-      @path.file(@the_file) do |file|
+      @path.file('amp/the.file') do |file|
         file << 'foo'
       end
+      subject.refresh!
     end
 
-    xit "should be modified" do
+    it "should be modified" do
       subject.file_modified?(@the_file).should be_true
     end
   end
