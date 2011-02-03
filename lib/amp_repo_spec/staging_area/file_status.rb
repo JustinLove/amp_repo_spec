@@ -70,4 +70,32 @@ shared_examples_for 'staging_area#file_status' do
     it {'removed.file'.should stat_as(:deleted)}
     it {'new.file'.should stat_as(:untracked)}
   end
+
+  describe 'when in a repo with history' do
+    in_a_new_directory
+    subject {repo.staging_area}
+    before(:all) do
+      Amp::Hook = Object.new
+      class << Amp::Hook
+        def run_hook(*args)
+        end
+      end
+      Amp::Match = Class.new
+      class Amp::Match
+        def self.create(*args); new; end
+        def call(*args); true; end
+        def files; []; end
+      end
+      repo.init
+      @path.file('amp/previously.removed')
+      repo.add('previously.removed')
+      repo.commit(:message => 'stuff')
+      repo.remove('previously.removed')
+      subject.refresh!
+      repo.commit(:message => 'stuff')
+      subject.refresh!
+    end
+
+    it {'previously.removed'.should stat_as(nil)}
+  end
 end
