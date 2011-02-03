@@ -5,6 +5,7 @@ module AmpRepoSpec::Helper
   include Construct::Helpers
   def self.included(into)
     into.before(:all) do
+      install_stubs
       @basedir = Dir.getwd
       @construct = create_construct
       Dir.chdir @construct.to_s
@@ -22,6 +23,22 @@ module AmpRepoSpec::Helper
 
   attr_accessor :construct
   attr_accessor :tempdir
+
+  module Stubs
+    class Hook
+      def self.run_hook(*args)
+      end
+    end
+    class Match
+      def self.create(*args); new; end
+      def call(*args); true; end
+      def files; []; end
+    end
+  end
+  def install_stubs
+    Amp.const_set(:Hook, Stubs::Hook) if Amp::Hook != Stubs::Hook
+    Amp.const_set(:Match, Stubs::Match) if Amp::Match != Stubs::Match
+  end
 
   module ClassMethods
     include Construct::Helpers

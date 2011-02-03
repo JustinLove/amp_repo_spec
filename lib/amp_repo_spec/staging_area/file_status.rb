@@ -36,17 +36,6 @@ shared_examples_for 'staging_area#file_status' do
     in_a_new_directory
     subject {repo.staging_area}
     before(:all) do
-      Amp::Hook = Object.new
-      class << Amp::Hook
-        def run_hook(*args)
-        end
-      end
-      Amp::Match = Class.new
-      class Amp::Match
-        def self.create(*args); new; end
-        def call(*args); true; end
-        def files; []; end
-      end
       repo.init
       @path.file('amp/unmodified.file')
       repo.add('unmodified.file')
@@ -75,17 +64,6 @@ shared_examples_for 'staging_area#file_status' do
     in_a_new_directory
     subject {repo.staging_area}
     before(:all) do
-      Amp::Hook = Object.new
-      class << Amp::Hook
-        def run_hook(*args)
-        end
-      end
-      Amp::Match = Class.new
-      class Amp::Match
-        def self.create(*args); new; end
-        def call(*args); true; end
-        def files; []; end
-      end
       repo.init
       @path.file('amp/previously.removed')
       repo.add('previously.removed')
