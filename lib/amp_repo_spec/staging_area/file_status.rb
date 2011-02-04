@@ -18,14 +18,11 @@ shared_examples_for 'staging_area#file_status' do
 
 
   describe 'when in a brand new repository' do
-    in_a_new_directory
-    subject {repo.staging_area}
-    before(:all) do
-      repo.init
-      @path.file('amp/untracked.file')
-      @path.file('amp/tracked.file')
-      repo.add('tracked.file')
+    in_a_new_repo do
+      create 'untracked.file'
+      add 'tracked.file'
     end
+    subject {repo.staging_area}
 
     it {'nonexistant.file'.should stat_as(nil)}
     it {'untracked.file'.should stat_as(:untracked)}
@@ -33,25 +30,18 @@ shared_examples_for 'staging_area#file_status' do
   end
 
   describe 'when in a repo with tracked files' do
-    in_a_new_directory
-    subject {repo.staging_area}
-    before(:all) do
-      repo.init
-      @path.file('amp/unmodified.file')
-      repo.add('unmodified.file')
-      @path.file('amp/modified.file')
-      repo.add('modified.file')
-      @path.file('amp/deleted.file')
-      repo.add('deleted.file')
-      @path.file('amp/removed.file')
-      repo.add('removed.file')
-      repo.commit(:message => 'stuff')
-      @path.file('amp/modified.file') {|file| file << 'stuff' }
-      repo.remove('removed.file')
-      File.delete('amp/deleted.file')
-      @path.file('amp/new.file')
-      subject.refresh!
+    in_a_new_repo do
+      add 'unmodified.file'
+      add 'modified.file'
+      add 'deleted.file'
+      add 'removed.file'
+      commit
+      remove 'removed.file'
+      delete 'deleted.file'
+      modify 'modified.file'
+      create 'new.file'
     end
+    subject {repo.staging_area}
 
     it {'unmodified.file'.should stat_as(:normal)}
     it {'modified.file'.should stat_as(:modified)}
@@ -61,18 +51,13 @@ shared_examples_for 'staging_area#file_status' do
   end
 
   describe 'when in a repo with history' do
-    in_a_new_directory
-    subject {repo.staging_area}
-    before(:all) do
-      repo.init
-      @path.file('amp/previously.removed')
-      repo.add('previously.removed')
-      repo.commit(:message => 'stuff')
-      repo.remove('previously.removed')
-      subject.refresh!
-      repo.commit(:message => 'stuff')
-      subject.refresh!
+    in_a_new_repo do
+      add 'previously.removed'
+      commit
+      remove 'previously.removed'
+      commit
     end
+    subject {repo.staging_area}
 
     it {'previously.removed'.should stat_as(nil)}
   end

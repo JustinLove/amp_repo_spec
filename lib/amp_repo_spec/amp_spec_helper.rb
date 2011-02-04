@@ -1,7 +1,9 @@
 require 'tmpdir'
 require 'construct'
+require 'amp_repo_spec/repo_factory'
 
 module AmpRepoSpec::Helper
+  RepoFactory = AmpRepoSpec::RepoFactory
   include Construct::Helpers
   def self.included(into)
     into.before(:all) do
@@ -24,6 +26,9 @@ module AmpRepoSpec::Helper
   attr_accessor :construct
   attr_accessor :tempdir
 
+  def factory(&block)
+  end
+
   module Stubs
     class Hook
       def self.run_hook(*args)
@@ -36,8 +41,8 @@ module AmpRepoSpec::Helper
     end
   end
   def install_stubs
-    Amp.const_set(:Hook, Stubs::Hook) if Amp::Hook != Stubs::Hook
-    Amp.const_set(:Match, Stubs::Match) if Amp::Match != Stubs::Match
+    Amp.const_set(:Hook, Stubs::Hook) unless Amp.const_defined?(:Hook) && Amp::Hook == Stubs::Hook
+    Amp.const_set(:Match, Stubs::Match) unless Amp.const_defined?(:Match) && Amp::Match == Stubs::Match
   end
 
   module ClassMethods
@@ -54,6 +59,12 @@ module AmpRepoSpec::Helper
         newpath.destroy!
       end
       let(:repo) {ModuleUnderTest::LocalRepository.new(newpath.to_s + '/amp')}
+    end
+    def in_a_new_repo(&block)
+      in_a_new_directory
+      before(:all) do
+        AmpRepoSpec::RepoFactory.new(@path, repo, &block)
+      end
     end
   end
 end

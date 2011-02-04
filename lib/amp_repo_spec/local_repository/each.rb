@@ -1,37 +1,11 @@
 shared_examples_for 'local_repository#each' do
   it {should respond_to :each}
 
-  Amp::Hook = Object.new
-  class << Amp::Hook
-    def run_hook(*args)
-    end
-  end
-
-  Amp::Match = Class.new
-  class Amp::Match
-    def self.create(*args); new; end
-    def call(*args); true; end
-    def files; []; end
-  end
-
-  in_a_new_directory
-  subject {repo}
-
   describe 'in a repository with two revisions' do
-    before(:all) do
-      subject.init
-      File.open('test.txt', 'w') do |f|
-        f.write('something')
-      end
-      subject.add('test.txt')
-      subject.commit(:message => 'one')
-
-      File.open('test.txt', 'a') do |f|
-        f.write('else')
-      end
-      subject.add('test.txt')
-      subject.commit(:message => 'two')
+    in_a_new_directory do
+      revisions 2
     end
+    subject {repo}
 
     pending "should call the block multiple times" do
       counter = 0

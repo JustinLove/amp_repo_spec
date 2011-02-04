@@ -8,14 +8,8 @@ shared_examples_for 'local_repository#parents' do
   end
 
   describe "in a new repo" do
-    in_a_new_directory
+    in_a_new_repo
     subject {repo}
-
-    before(:all) do
-      subject.init
-      @path.file('amp/some.file')
-      subject.add('some.file')
-    end
 
     its(:parents) {should be_kind_of(Array)}
     its(:parents) {should have(2).items}
@@ -24,15 +18,11 @@ shared_examples_for 'local_repository#parents' do
   end
 
   describe "after committing" do
-    in_a_new_directory
-    subject {repo}
-
-    before(:all) do
-      subject.init
-      @path.file('amp/some.file')
-      subject.add('some.file')
-      subject.commit(:message => 'stuff')
+    in_a_new_repo do
+      add 'some.file'
+      commit
     end
+    subject {repo}
 
     its(:parents) {subject.first.should look_like_a_digest}
     its(:parents) {subject.last.should be_nil}

@@ -7,30 +7,20 @@ shared_examples_for 'local_repository#commit' do
     end
   end
 
-  def repo_in(path)
-    self.class.subject {described_class.new(path.to_s)}
-    subject.init
-  end
-
-  def in_a_new_repo
-    within_construct do |path|
-      repo_in(path)
-      yield(path)
+  describe "when in a brand new repo" do
+    in_a_new_directory
+    it "should not commit" do
+      repo.init
+      repo.commit(:message => 'test').should_not look_like_a_digest
     end
   end
 
-
-  it "should not commit in a brand new repo" do
+  describe "when in a repo with one file" do
     in_a_new_repo do
-      subject.commit(:message => 'test').should_not look_like_a_digest
+      add 'some.file'
     end
-  end
-
-  it "should commmit in a repo with one file" do
-    in_a_new_repo do |path|
-      path.file('some.file')
-      subject.add('some.file')
-      subject.commit(:message => 'test').should look_like_a_digest
+    it "should commit" do
+      repo.commit(:message => 'test').should look_like_a_digest
     end
   end
 
