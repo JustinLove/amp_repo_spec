@@ -42,19 +42,26 @@ shared_examples_for 'local_repository#file_modified' do
 
     before(:all) do
       subject.init
-      @the_file = 'the.file'
-      @path.file('amp/the.file')
-      subject.add(@the_file)
+      @path.file('amp/file.one')
+      subject.add('file.one')
+      @path.file('amp/file.two')
+      subject.add('file.two')
       subject.commit(:message => 'stuff')
 
-      @path.file('amp/the.file') do |file|
+      @path.file('amp/file.one') do |file|
+        file << 'foo'
+      end
+      @path.file('amp/file.two') do |file|
         file << 'foo'
       end
       subject.refresh!
     end
 
-    it "should be modified" do
-      subject.file_modified?(@the_file).should be_true
+    it "one file modified" do
+      subject.file_modified?('file.one').should be_true
+    end
+    it "two files modified" do
+      subject.file_modified?('file.two').should be_true
     end
   end
 end
