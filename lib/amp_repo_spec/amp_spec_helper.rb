@@ -26,9 +26,6 @@ module AmpRepoSpec::Helper
   attr_accessor :construct
   attr_accessor :tempdir
 
-  def factory(&block)
-  end
-
   module Stubs
     class Hook
       def self.run_hook(*args)
