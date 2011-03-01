@@ -13,5 +13,7 @@ shared_examples_for 'local_repository#run_hook' do
       hook.should_receive(:run_hook).with(:call, {:throw=>false})
       subject.run_hook(:call)
     end
+
+    after(:all) {install_stubs}
   end
 end

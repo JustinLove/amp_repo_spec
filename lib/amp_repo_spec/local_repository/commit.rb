@@ -24,5 +24,15 @@ shared_examples_for 'local_repository#commit' do
     end
   end
 
+  describe "when in an existing repo" do
+    in_a_new_repo do
+      add 'some.file'
+      commit
+      add 'another.file'
+    end
+    it "should commit" do
+      repo.commit(:message => 'test').should look_like_a_digest
+    end
+  end
   pending "after proving lower level operations"
 end
