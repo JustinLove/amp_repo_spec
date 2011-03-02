@@ -2,6 +2,16 @@ require 'tmpdir'
 require 'construct'
 require 'amp_repo_spec/repo_factory'
 
+RSpec::Matchers.define :quack_like do |method_list|
+  match do |actual|
+    (method_list - actual.methods).empty?
+  end
+
+  failure_message_for_should do |actual|
+    "expected #{actual.class} to respond to #{method_list - actual.methods}"
+  end
+end
+
 module AmpRepoSpec::Helper
   RepoFactory = AmpRepoSpec::RepoFactory
   include Construct::Helpers

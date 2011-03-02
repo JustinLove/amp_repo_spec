@@ -1,4 +1,4 @@
-AmpRepoSpec::ChangesetMethods = [
+AmpRepoSpec::AChangeset = [
     :changed_files,
     :changed_lines_statistics,
     :include?,
@@ -18,18 +18,8 @@ AmpRepoSpec::ChangesetMethods = [
     :all_files,
     :working?,
 ]
-shared_examples_for 'changeset#quack' do |duck|
-  AmpRepoSpec::ChangesetMethods.each do |meth|
-    it {(duck || subject).should respond_to(meth)}
+class <<AmpRepoSpec::AChangeset
+  def inspect
+    'a changeset'
   end
 end
-RSpec::Matchers.define :quack_like_a_changeset do
-  match do |actual|
-    (AmpRepoSpec::ChangesetMethods - actual.methods).empty?
-  end
-
-  failure_message_for_should do |actual|
-    "expected #{actual.class} to respond to #{AmpRepoSpec::ChangesetMethods - actual.methods}"
-  end
-end
-
