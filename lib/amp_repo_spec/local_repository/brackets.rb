@@ -35,12 +35,29 @@ shared_examples_for 'local_repository#brackets' do
   end
 
   describe "after committing" do
+    $node = ''
     in_a_new_repo do
       add 'some.file'
-      commit
+      $node = commit
     end
     it_should_behave_like 'changeset reference'
-  end
 
-  pending 'Integer, String'
+    describe "Integer" do
+      subject{repo[0]}
+      it_should_behave_like "changeset#quack"
+      its(:working?) {should be_false}
+    end
+
+    describe "String" do
+      subject{repo[$node.to_s]}
+      it_should_behave_like "changeset#quack"
+      its(:working?) {should be_false}
+    end
+
+    describe "Node" do
+      subject{repo[$node]}
+      it_should_behave_like "changeset#quack"
+      its(:working?) {should be_false}
+    end
+  end
 end
