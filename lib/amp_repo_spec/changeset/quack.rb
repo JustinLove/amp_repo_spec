@@ -23,3 +23,7 @@ class <<AmpRepoSpec::AChangeset
     'a changeset'
   end
 end
+
+shared_examples_for "changeset#quack" do
+  it {should quack_like AmpRepoSpec::AChangeset}
+end
