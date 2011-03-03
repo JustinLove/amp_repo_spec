@@ -5,6 +5,7 @@ shared_examples_for 'changeset#all_files' do
     $node = ''
     in_a_new_repo do
       add 'some.file'
+      create 'unknown.file'
       $node = commit
     end
     subject {described_class.new(repo, $node).all_files}
