@@ -1,6 +1,12 @@
 shared_examples_for 'changeset#all_files' do
   it {should respond_to :all_files}
 
+  describe "empty repo" do
+    in_a_new_repo
+    subject {described_class.new(repo, :tip).all_files}
+    it {should be_empty}
+  end
+
   describe "committing one file" do
     $node = ''
     in_a_new_repo do
