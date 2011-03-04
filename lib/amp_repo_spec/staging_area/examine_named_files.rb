@@ -54,7 +54,7 @@ shared_examples_for 'staging_area#examine_named_files' do
     end
   end
 
-  describe 'when in an existing repo', :focus => true do
+  describe 'when in an existing repo' do
     in_a_new_repo do
       add 'existing.file'
       add 'removed.file'
@@ -89,4 +89,7 @@ shared_examples_for 'staging_area#examine_named_files' do
       it {subject.last.should be_empty}
     end
   end
+
+  pending 'ignored'
+  pending 'depreciated?'
 end
