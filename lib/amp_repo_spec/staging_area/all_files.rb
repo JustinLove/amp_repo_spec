@@ -1,13 +1,13 @@
 shared_examples_for 'staging_area#all_files' do
   it {should respond_to :all_files}
 
-  describe 'in a new repository', :focus => true do
+  describe 'in a new repository' do
     in_a_new_repo
     subject {repo.staging_area.all_files}
     it {should be_empty}
   end
 
-  describe 'in a modified repository', :focus => true do
+  describe 'in a modified repository' do
     in_a_new_repo do
       add 'unmodified.file'
       add 'modified.file'

@@ -25,7 +25,7 @@ shared_examples_for 'staging_area#file_status' do
     subject {repo.staging_area}
 
     it {'nonexistant.file'.should stat_as(nil)}
-    it {'untracked.file'.should stat_as(:untracked)}
+    it {'untracked.file'.should stat_as(nil)}
     it {'tracked.file'.should stat_as(:added)}
   end
 
@@ -44,10 +44,10 @@ shared_examples_for 'staging_area#file_status' do
     subject {repo.staging_area}
 
     it {'unmodified.file'.should stat_as(:normal)}
-    it {'modified.file'.should stat_as(:modified)}
-    it {'deleted.file'.should stat_as(:deleted)}
-    it {'removed.file'.should stat_as(:deleted)}
-    it {'new.file'.should stat_as(:untracked)}
+    it {'modified.file'.should stat_as(:normal)}
+    it {'deleted.file'.should stat_as(:normal)}
+    it {'removed.file'.should stat_as(:removed)}
+    it {'new.file'.should stat_as(nil)}
   end
 
   describe 'when in a repo with history' do
