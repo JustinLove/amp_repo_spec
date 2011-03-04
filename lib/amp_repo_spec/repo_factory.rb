@@ -28,7 +28,12 @@ class AmpRepoSpec::RepoFactory
   end
 
   def delete(name)
-    File.delete('amp/'+name)
+    path = 'amp/'+name
+    if File.directory?(path)
+      Dir.delete(path)
+    else
+      File.delete(path)
+    end
   end
 
   def commit
