@@ -11,7 +11,7 @@ class AmpRepoSpec::RepoFactory
   end
 
   def create(name)
-    path.file('amp/'+name)
+    modify(name)
   end
 
   def add(name)
@@ -20,7 +20,7 @@ class AmpRepoSpec::RepoFactory
   end
 
   def modify(name)
-    path.file('amp/'+name) {|f| f << 'changed'}
+    path.file('amp/'+name) {|f| f << Time.now.to_f.to_s}
   end
 
   def remove(name)

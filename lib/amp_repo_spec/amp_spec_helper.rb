@@ -44,7 +44,7 @@ module AmpRepoSpec::Helper
     class Match
       def self.create(*args); new; end
       def call(*args); true; end
-      def files; []; end
+      def files; Dir.chdir('amp') {Dir.glob('**')}; end
     end
   end
   def install_stubs
