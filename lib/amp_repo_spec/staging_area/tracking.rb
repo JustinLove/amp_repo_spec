@@ -30,7 +30,7 @@ shared_examples_for 'staging_area#tracking' do
     it { should     be_tracking('unmodified.file') }
     it { should     be_tracking('modified.file') }
     it { should     be_tracking('deleted.file') }
-    it { should     be_tracking('removed.file') }
+    it { should_not be_tracking('removed.file') }
     it { should_not be_tracking('new.file') }
   end
 
