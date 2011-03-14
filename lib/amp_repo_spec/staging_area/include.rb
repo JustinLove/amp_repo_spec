@@ -1,7 +1,7 @@
 shared_examples_for 'staging_area#include' do
   it {should respond_to :include}
 
-  describe 'include', :focus => true do
+  describe 'include' do
     in_a_new_repo do
       add 'included.file'
       add 'normal.file'
