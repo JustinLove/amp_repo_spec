@@ -12,19 +12,28 @@ class AmpRepoSpec::RepoFactory
 
   def create(name)
     modify(name)
+    name
   end
 
   def add(name)
     create(name)
     repo.add(name)
+    name
   end
 
   def modify(name)
     path.file('amp/'+name) {|f| f << Time.now.to_f.to_s}
+    name
+  end
+
+  def include(name)
+    repo.staging_area.include(name)
+    name
   end
 
   def remove(name)
     repo.remove(name)
+    name
   end
 
   def delete(name)
@@ -34,6 +43,7 @@ class AmpRepoSpec::RepoFactory
     else
       File.delete(path)
     end
+    name
   end
 
   def commit
